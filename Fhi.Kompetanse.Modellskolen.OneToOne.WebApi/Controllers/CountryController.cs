@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Fhi.Kompetanse.Modellskolen.OneToOne.WebApi.Data.Context;
-using Fhi.Kompetanse.Modellskolen.OneToOne.WebApi.Data.Entities;
-using Fhi.Kompetanse.Modellskolen.OneToOne.WebApi.Model;
-using Fhi.Kompetanse.Modellskolen.OneToOne.Contracts;
-
+﻿
 namespace Fhi.Kompetanse.Modellskolen.OneToOne.WebApi.Controllers
 {
     [Route("api/[controller]")]
@@ -21,9 +15,9 @@ namespace Fhi.Kompetanse.Modellskolen.OneToOne.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<GetCountryDto>>> GetCountry()
         {
-            return await _context.Countries.Select(e => new GetCountryDto(e.Name, e.CountryId, e.King!=null?e.King.Name:"")).ToListAsync();
+            //TODO add King.Name if exists
+            return await _context.Countries.Select(e => new GetCountryDto(e.Name,e.CountryId, "<KingName>")).ToListAsync();
         }
-
 
         [HttpPost]
         public async Task<ActionResult<GetCountryDto>> PostCountry(PostCountryDto countryDto)
@@ -31,30 +25,16 @@ namespace Fhi.Kompetanse.Modellskolen.OneToOne.WebApi.Controllers
             if (String.IsNullOrEmpty(countryDto.CountryName))
                 return NotFound("CountryName missing");
 
-            Country? country = _context.Countries.Where(e => e.Name.Equals(countryDto.CountryName)).Include(e => e.King).FirstOrDefault();
+            //TODO Find country if exsists , else create
+            Country country = null; 
 
-            if (country == null)
-            {
-                country = new Country() { Name = countryDto.CountryName };
-                _context.Countries.Add(country);
-            }
-
-            if (!String.IsNullOrEmpty(countryDto.KingnameName))
-            {
-                if (country.King == null || !country.King.Name.Equals(countryDto.KingnameName))
-                {
-                    country.King = new King() { Name = countryDto.KingnameName };
-                }
-                else
-                {
-                    //  return UnprocessableEntity($"Finnes allerede {countryDto}");
-                    return Ok(new GetCountryDto(country.Name, country.CountryId, country.King != null ? country.King.Name : ""));
-                }
-            }
-
+            //If KingnameName , add to country (if combination not already exists...)
+          
             var debug = _context.ChangeTracker.DebugView;
             await _context.SaveChangesAsync();
-            return CreatedAtAction("GetCountry", new { id = country.CountryId }, new GetCountryDto(country.Name, country.CountryId, country.King != null ? country.King.Name : ""));
+
+            //TODO Set in King.Name
+            return CreatedAtAction("GetCountry", new { id = country.CountryId }, new GetCountryDto(country.Name, country.CountryId,"<King.Name>"));
         }
 
 

@@ -5,6 +5,5 @@ public class King
     public int KingId { get; set; }
     required public string Name { get; set; }
 
-    public int CountryId { get; set; }
-    public Country? Country { get; set; }
+  //TODO add here
 }

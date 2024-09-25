@@ -41,11 +41,13 @@ using (var scope = app.Services.CreateScope())
     context.AddRange(countries);
     context.SaveChanges();
 
+
+    //TODO Add Country to King...
     List<King> kings = new List<King>
      {
-         new King() { Name = "Charles" ,Country=context.Countries.Where(e=>e.Name.Equals("England")).Single()  },
-         new King() { Name = "Harald" ,Country=context.Countries.Where(e=>e.Name.Equals("Norway")).Single()  },
-         new King() { Name = "Carl" ,Country=context.Countries.Where(e=>e.Name.Equals("Sweden")).Single()  },
+         new King() { Name = "Charles" },
+         new King() { Name = "Harald"  },
+         new King() { Name = "Carl"  },
      };
 
     context.AddRange(kings);
