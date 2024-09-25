@@ -9,17 +9,20 @@
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
-  <ItemGroup>
+   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="NUnit" Version="3.14.0" />
     <PackageReference Include="NUnit.Analyzers" Version="3.9.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageReference Include="Refit.HttpClientFactory" Version="7.2.1" />
+   
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Fhi.Kompetanse.Modellskolen.OneToOne.Contracts\Fhi.Kompetanse.Modellskolen.OneToOne.Contracts.csproj" />
+    <ProjectReference Include="..\Fhi.Kompetanse.Modellskolen.OneToOne.WebApi\Fhi.Kompetanse.Modellskolen.OneToOne.WebApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,22 +1,11 @@
 using Fhi.Kompetanse.Modellskolen.OneToOne.Contracts;
-using Refit;
 
 namespace Fhi.Kompetanse.Modellskolen.OneToOne.NUnitIntegrasjonstest;
 
 [TestFixture]
-public class KingTester
+public class KingTester:Testbase
 {
-    const string CHARLES = "Charles";
-    const string England = "England";
-
-    IKing kingclient;
-
-    [OneTimeSetUp]
-    public void OneTimeSetUp()
-    {
-        kingclient = RestService.For<IKing>("https://localhost:5057/");
-    }
-
+  
     [SetUp]
     public async Task Setup()
     {
@@ -57,12 +46,6 @@ public class KingTester
 
     [TearDown]
     public void TearDown()
-    {
-    }
-
-
-    [OneTimeTearDown]
-    public void OneTimeTearDown()
     {
     }
 

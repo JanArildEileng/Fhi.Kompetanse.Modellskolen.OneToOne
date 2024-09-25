@@ -1,24 +1,12 @@
 using Fhi.Kompetanse.Modellskolen.OneToOne.Contracts;
 using Fhi.Kompetanse.Modellskolen.OneToOne.WebApi.Model;
-using Refit;
 
 namespace Fhi.Kompetanse.Modellskolen.OneToOne.NUnitIntegrasjonstest;
 
 
 [TestFixture]
-public class CountryTester
+public class CountryTester:Testbase
 {
-    const string SPAIN = "Spain";
-    const string NORWAY = "Norway";
-    const string HARALD = "Harald";
-
-    ICountry countryClient;
-
-    [OneTimeSetUp]
-    public void OneTimeSetUp()
-    {
-        countryClient = RestService.For<ICountry>("https://localhost:5057/");
-    }
 
     [SetUp]
     public async Task Setup()
@@ -70,12 +58,6 @@ public class CountryTester
 
     [TearDown]
     public void TearDown()
-    {
-    }
-
-
-    [OneTimeTearDown]
-    public void OneTimeTearDown()
     {
     }
 

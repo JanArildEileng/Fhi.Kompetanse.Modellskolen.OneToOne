@@ -21,4 +21,9 @@
     <ProjectReference Include="..\Fhi.Kompetanse.Modellskolen.OneToOne.Contracts\Fhi.Kompetanse.Modellskolen.OneToOne.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Fhi.Kompetanse.Modellskolen.OneToOne.NUnitIntegrasjonstest" />
+  </ItemGroup>
+
+
 </Project>
