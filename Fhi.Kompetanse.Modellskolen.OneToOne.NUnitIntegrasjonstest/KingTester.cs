@@ -5,15 +5,6 @@ namespace Fhi.Kompetanse.Modellskolen.OneToOne.NUnitIntegrasjonstest;
 [TestFixture]
 public class KingTester:Testbase
 {
-  
-    [SetUp]
-    public async Task Setup()
-    {
-        //make sure Charles is king in England..
-        PostKingDto postKingDto = new PostKingDto(England, CHARLES);
-        GetKingDto getKingDto = await kingclient.PostKing(postKingDto);
-    }
-
     [TestCase]
     public async Task GetKings_Test()
     {
@@ -41,12 +32,6 @@ public class KingTester:Testbase
 
         if (KingId > 0)
             await kingclient.DeleteKing(KingId);
-    }
-
-
-    [TearDown]
-    public void TearDown()
-    {
     }
 
 }

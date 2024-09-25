@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
-using System.Runtime.CompilerServices;
+using Respawn;
 using Testcontainers.MsSql;
 
 namespace Fhi.Kompetanse.Modellskolen.OneToOne.NUnitIntegrasjonstest;
-
 
 public class Testbase
 {
@@ -26,11 +25,11 @@ public class Testbase
 
     internal WebApplicationFactory<Program> factory { get; set; }
 
-    const string databaseName = "Modellskolen";
+    const string databaseName = "ModellskolenOneToOne";
     private MsSqlContainer MsSqlContainer { get; init; } = new MsSqlBuilder().Build();
     private string ConnectionString => MsSqlContainer.GetConnectionString().Replace("Database=master;", $"Database={databaseName};");
 
-
+     internal Respawner respawner { get; set; }
 
 
     [OneTimeSetUp]
@@ -38,29 +37,53 @@ public class Testbase
     {
         await MsSqlContainer.StartAsync();
 
-
         factory = new WebApplicationFactory<Program>()
           .WithWebHostBuilder(builder =>
           {
               builder.ConfigureTestServices(services =>
               {
-
                   var dbContextDescriptor = services.SingleOrDefault(
                         d => d.ServiceType ==
                    typeof(DbContextOptions<KompetanseContext>));
-
                   services.Remove(dbContextDescriptor!);
-
                   services.AddDbContext<KompetanseContext>(options => options.UseSqlServer(ConnectionString));
               });
 
               builder.UseEnvironment("Development");
           });
 
-
-
         countryClient = RestService.For<ICountry>(factory.CreateClient());
         kingclient = RestService.For<IKing>(factory.CreateClient());
+
+        respawner = await Respawner.CreateAsync(ConnectionString);
+    }
+
+     [SetUp]
+    public async Task Setup()
+    {
+        await respawner.ResetAsync(ConnectionString);
+
+        //delete Spain..if exists
+        int CountryId = (await countryClient.GetCountry()).Where(e => e.CountryName.Equals(SPAIN)).Select(e => e.CountryId).FirstOrDefault();
+        if (CountryId > 0)
+        {
+            await countryClient.DeleteCountry(CountryId);
+        }
+        //add Norway and Harald
+        GetCountryDto getCountryDto = await countryClient.PostCountry(new PostCountryDto(NORWAY, HARALD));
+    
+        //make sure Charles is king in England..
+        PostKingDto postKingDto = new PostKingDto(England, CHARLES);
+        GetKingDto getKingDto = await kingclient.PostKing(postKingDto);
+
+        //DOTO Legg til mer testdata
+
+    }
+
+
+    [TearDown]
+    public void TearDown()
+    {
     }
 
     [OneTimeTearDown]

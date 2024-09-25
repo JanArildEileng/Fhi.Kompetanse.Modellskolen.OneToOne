@@ -8,19 +8,6 @@ namespace Fhi.Kompetanse.Modellskolen.OneToOne.NUnitIntegrasjonstest;
 public class CountryTester:Testbase
 {
 
-    [SetUp]
-    public async Task Setup()
-    {
-        //delete Spain..if exists
-        int CountryId = (await countryClient.GetCountry()).Where(e => e.CountryName.Equals(SPAIN)).Select(e => e.CountryId).FirstOrDefault();
-        if (CountryId > 0)
-        {
-            await countryClient.DeleteCountry(CountryId);
-        }
-        //add Norway and Harald
-        GetCountryDto getCountryDto = await countryClient.PostCountry(new PostCountryDto(NORWAY, HARALD));
-    }
-
     [TestCase]
     public async Task GetCountry_Test()
     {
@@ -53,12 +40,6 @@ public class CountryTester:Testbase
         //assert Norway and Harald all gone
         var norway = (await countryClient.GetCountry()).Where(e => e.CountryName.Equals(NORWAY)).SingleOrDefault();
         Assert.IsNull(norway);
-    }
-
-
-    [TearDown]
-    public void TearDown()
-    {
     }
 
 }
