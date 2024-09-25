@@ -77,7 +77,7 @@ public class Testbase
         GetKingDto getKingDto = await kingclient.PostKing(postKingDto);
 
         //DOTO Legg til mer testdata
-
+        await TestDataFactory.AddToContext(factory.Services);
     }
 
 
