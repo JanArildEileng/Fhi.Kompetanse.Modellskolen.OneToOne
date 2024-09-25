@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35208.52
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fhi.Kompetanse.Modellskolen.OneToOne.WebApi", "Fhi.Kompetanse.Modellskolen.OneToOne.WebApi\Fhi.Kompetanse.Modellskolen.OneToOne.WebApi.csproj", "{901E8EF7-8344-4A0D-A629-3B5CAB3743AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fhi.Kompetanse.Modellskolen.OneToOne.Contracts", "Fhi.Kompetanse.Modellskolen.OneToOne.Contracts\Fhi.Kompetanse.Modellskolen.OneToOne.Contracts.csproj", "{AAD9D106-7B21-4311-B76D-82DE53543EF3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{439DE301-8A4F-4A16-A583-EBF812B67B48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fhi.Kompetanse.Modellskolen.OneToOne.NUnitIntegrasjonstest", "Fhi.Kompetanse.Modellskolen.OneToOne.NUnitIntegrasjonstest\Fhi.Kompetanse.Modellskolen.OneToOne.NUnitIntegrasjonstest.csproj", "{F663697F-298B-4661-9AF0-1756F9DCEBA4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql", "Sql", "{F7581484-5DAD-4C05-AACE-C48645856466}"
+	ProjectSection(SolutionItems) = preProject
+		ListAllCountriesAndKings.sql = ListAllCountriesAndKings.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{901E8EF7-8344-4A0D-A629-3B5CAB3743AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{901E8EF7-8344-4A0D-A629-3B5CAB3743AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{901E8EF7-8344-4A0D-A629-3B5CAB3743AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{901E8EF7-8344-4A0D-A629-3B5CAB3743AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAD9D106-7B21-4311-B76D-82DE53543EF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAD9D106-7B21-4311-B76D-82DE53543EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAD9D106-7B21-4311-B76D-82DE53543EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAD9D106-7B21-4311-B76D-82DE53543EF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F663697F-298B-4661-9AF0-1756F9DCEBA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F663697F-298B-4661-9AF0-1756F9DCEBA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F663697F-298B-4661-9AF0-1756F9DCEBA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F663697F-298B-4661-9AF0-1756F9DCEBA4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F663697F-298B-4661-9AF0-1756F9DCEBA4} = {439DE301-8A4F-4A16-A583-EBF812B67B48}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0796A33A-7111-4CC6-9B6A-971BA4757B8C}
+	EndGlobalSection
+EndGlobal
