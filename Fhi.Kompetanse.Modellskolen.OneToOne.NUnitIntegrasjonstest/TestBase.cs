@@ -1,9 +1,14 @@
 using Fhi.Kompetanse.Modellskolen.OneToOne.Contracts;
+using Fhi.Kompetanse.Modellskolen.OneToOne.WebApi.Data.Context;
 using Fhi.Kompetanse.Modellskolen.OneToOne.WebApi.Model;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Refit;
+using System.Runtime.CompilerServices;
+using Testcontainers.MsSql;
 
 namespace Fhi.Kompetanse.Modellskolen.OneToOne.NUnitIntegrasjonstest;
 
@@ -21,18 +26,37 @@ public class Testbase
 
     internal WebApplicationFactory<Program> factory { get; set; }
 
+    const string databaseName = "Modellskolen";
+    private MsSqlContainer MsSqlContainer { get; init; } = new MsSqlBuilder().Build();
+    private string ConnectionString => MsSqlContainer.GetConnectionString().Replace("Database=master;", $"Database={databaseName};");
+
+
+
+
     [OneTimeSetUp]
-    public void OneTimeSetUp()
+    public async Task OneTimeSetUp()
     {
+        await MsSqlContainer.StartAsync();
+
+
         factory = new WebApplicationFactory<Program>()
           .WithWebHostBuilder(builder =>
           {
               builder.ConfigureTestServices(services =>
               {
+
+                  var dbContextDescriptor = services.SingleOrDefault(
+                        d => d.ServiceType ==
+                   typeof(DbContextOptions<KompetanseContext>));
+
+                  services.Remove(dbContextDescriptor!);
+
+                  services.AddDbContext<KompetanseContext>(options => options.UseSqlServer(ConnectionString));
               });
 
               builder.UseEnvironment("Development");
           });
+
 
 
         countryClient = RestService.For<ICountry>(factory.CreateClient());
@@ -40,9 +64,10 @@ public class Testbase
     }
 
     [OneTimeTearDown]
-    public void OneTimeTearDown()
+    public async Task OneTimeTearDown()
     {
-        factory.Dispose();
+        await factory.DisposeAsync();
+        await MsSqlContainer.DisposeAsync();
     }
 
 }
